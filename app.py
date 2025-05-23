@@ -7,15 +7,12 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# Downloads (needed only once per environment)
+# Downloads
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
 
-# Load model
-model = joblib.load("spam_classifier.pkl")
-
-# Text preprocessing
+# Preprocessing (must match training)
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
@@ -26,6 +23,9 @@ def preprocess(text):
     tokens = [word for word in tokens if word not in stop_words]
     lemmatized = [lemmatizer.lemmatize(word) for word in tokens]
     return ' '.join(lemmatized)
+
+# Now load the model
+model = joblib.load("spam_classifier.pkl")
 
 # Streamlit UI
 st.title("📧 Spam Message Classifier")
